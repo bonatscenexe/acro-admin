@@ -1,3 +1,78 @@
-<body style="background-image: url('https://cdn.glitch.global/b58edb6c-a224-4570-916c-859bc26973ea/df6gqyr-01473b54-c0eb-4011-83aa-6d2527254ce5.png?v=1722725122461'); background-size: cover; background-repeat: no-repeat;">
-<h1>You'll never guess who's working on this...</h1>
-</body>
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Acropolis admin console</title>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: 'Orbitron';
+            }
+
+            #vanilla-terminal {
+                width: 100vw;
+                height: 100vh;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="vanilla-terminal"></div>
+        <script src="script.js"></script>
+        <script>
+            const term = new VanillaTerminal({
+                commands: {
+                    server: (terminal)=>{
+                        terminal.output('Server is <b>offline<b>.')
+                        terminal.setPrompt('@server <small>🔴</small> <u>offline</u> ');
+                    },
+                    welcome: 'Why are u here?',
+                    start: (terminal)=>{
+                        terminal.output('Server is currently offline.')
+                        terminal.output('<b>Starting...<b>.')
+                        terminal.setPrompt('@server <small>🟡</small> <u>Starting...</u> ');
+                    },
+                    restart: (terminal)=>{
+                        terminal.output('<b>Restarting...<b>.')
+                        terminal.setPrompt('@server <small>🟡</small> <u>Restarting...</u> ');
+                    },
+                    execute: (terminal)=>{
+                        terminal.output('<b>Attemptimg to execute command...<b>.')
+                        terminal.setPrompt('@server <small>🟡</small> <u>Executing...</u> ');
+                    },
+                    info: (terminal)=>{
+                        terminal.output('<b>Server info: 2vcpu, 1TB bandwith, 5gb ram<b>.')
+                        terminal.setPrompt('@server <small>🟡</small> <u>offline</u> ');
+                    }
+                },
+            });
+
+            term.prompt('Server login', (name)=>{
+              if(name === "admin") {
+                term.output(`Server key (pwd)`);
+                term.prompt('Server key', (key)=>{
+                  if(key === "pwd") {
+                 term.output(`Login success, welcome back ${name}! <br> I'm just setting things up for you...`);
+                 term.setPrompt(`${name} `);
+                    setTimeout(() => {
+                    term.clear()
+                      setTimeout(() => {
+                       let rint = Math.floor(Math.random() * (5000 - 0 + 1) + 0);
+                      term.output(`New session started with the unique ID of: ${rint}`);
+                      }, 1000); }, 700);
+                     term.onInput((command,parameters)=>{
+                console.log('⚡️onInput', command, parameters);
+                     });
+                  } else {
+                    term.output(`Login unsuccessfull - refresh`);
+                    document.querySelector("#vanilla-terminal > div > div").remove()
+                  }})} else {
+                term.output(`Login unsuccessfull - resfresh`);
+                  document.querySelector("#vanilla-terminal > div > div").remove()
+            }}
+            );
+        </script>
+    </body>
+</html>
