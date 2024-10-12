@@ -1,0 +1,9 @@
+span {
+    font-size: 15px;
+    font-family: monospace;
+    outline: none;
+}
+
+body {
+    background-color: rgb(44, 44, 44);
+}
